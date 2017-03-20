@@ -3,7 +3,9 @@ set -e
 
 if docker ps | grep --silent rancher-server; then
   docker stop rancher-server > /dev/null
-  docker rm rancher-server > /dev/null
+fi
+if docker ps -a | grep --silent rancher-server; then
+  docker rm -f rancher-server > /dev/null
 fi
 
 docker run -d --restart=always --name rancher-server -p 8080:8080 rancher/server:stable > /dev/null
